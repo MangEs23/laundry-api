@@ -11,7 +11,7 @@ module.exports = {
         updatedAt: new Date()
       },
       {
-        paket: 'cuci_setrika',
+        paket: 'cuci setrika',
         harga: 10000,
         createdAt: new Date(),
         updatedAt: new Date()
