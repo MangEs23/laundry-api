@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "manges",
+    "password": "password",
+    "database": "laundry_db",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "manges",
+    "password": "password",
+    "database": "laundry_db",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "manges",
+    "password": "password",
+    "database": "laundry_db",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
