@@ -6,12 +6,6 @@ const serviceController = require('../controllers/service.controller');
 const transactionController = require('../controllers/transaction.controller');
 const authJWT = require('../middleware/authJwt');
 
-routes.post('/transaction', transactionController.createTransaction)
-routes.get('/transaction', transactionController.getAllTrasaction)
-routes.get('/transaction/:id', transactionController.getTransactionById)
-routes.put('/transaction/:id', transactionController.updateTransaction)
-routes.delete('/transaction/:id', transactionController.deleteTransaction)
-
 routes.use(authJWT)
 // services routes
 routes.post('/services', serviceController.createService);
@@ -21,6 +15,11 @@ routes.put('/services/:id', serviceController.updateService);
 routes.delete('/services/:id', serviceController.deleteService);
 
 // transaction routes
+routes.post('/transaction', transactionController.createTransaction)
+routes.get('/transaction', transactionController.getAllTrasaction)
+routes.get('/transaction/:id', transactionController.getTransactionById)
+routes.put('/transaction/:id', transactionController.updateTransaction)
+routes.delete('/transaction/:id', transactionController.deleteTransaction)
 
 
 module.exports = routes;
