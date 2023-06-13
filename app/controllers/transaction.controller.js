@@ -1,10 +1,30 @@
 const { sequelize } = require('../../db/models');
 const { QueryTypes } = require('sequelize')
+const jwt = require('jsonwebtoken')
 const db = require('../../db/models');
 
 const Transaction = db.Transaction
 const Admin = db.Admin
 const Service = db.Service
+
+const getAdmin = async (req, res) => {
+  const authHeader = req.headers.authorization || req.headers["x-access-token"];
+  if (authHeader) {
+    const token = authHeader.split(' ')[1];
+    const decoded = await jwt.verify(token, process.env.TOKEN)
+    let theAdmin 
+    
+    if (decoded) {
+      const admin = await Admin.findOne({
+        where: {
+          email: decoded.email
+        }
+      })
+      theAdmin = admin
+    }
+    return theAdmin
+  }
+}
 
 const createTransaction = async (req, res) => {
 
@@ -14,6 +34,15 @@ const createTransaction = async (req, res) => {
         }
     })
 
+
+    if (!service) {
+      console.error('Service is not found in createTransaction() !:', service);
+      res.status(500).send({ service: 'Service is not found in createTransaction() !' });
+      return
+    }
+
+    const admin = await getAdmin(req, res)
+
     const berat = req.body.berat
     const total = berat * service.harga
     const transaction = {
@@ -21,7 +50,8 @@ const createTransaction = async (req, res) => {
         berat: berat,
         service_id: service.id,
         total: total, 
-        tanggal: new Date()
+        tanggal: new Date(),
+        admin_id: admin.id
     };
     Transaction.create(transaction)
       .then(transaction => {
@@ -114,5 +144,6 @@ module.exports = {
     getAllTrasaction,
     getTransactionById,
     updateTransaction,
-    deleteTransaction
+    deleteTransaction,
+    getAdmin
 }
